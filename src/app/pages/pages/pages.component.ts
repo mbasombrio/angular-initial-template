@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { HeaderComponent } from "../../shared/header/header.component";
-import { SidebarsComponent } from "../../shared/sidebars/sidebars.component";
-import { BreadcrumbsComponent } from "../../shared/breadcrumbs/breadcrumbs.component";
 import { RouterOutlet } from '@angular/router';
+import { BreadcrumbsComponent } from '@shared/breadcrumbs/breadcrumbs.component';
+import { HeaderComponent } from '@shared/header/header.component';
+import { SidebarsComponent } from '@shared/sidebars/sidebars.component';
 
 @Component({
   selector: 'app-pages',
