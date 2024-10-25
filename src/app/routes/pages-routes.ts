@@ -8,13 +8,12 @@ import { ProgressComponent } from '@pages/progress/progress.component';
 
 export const pagesRoutes: Routes = [
   {
-    path: '',
+    path: 'dashboard',
     component: PagesComponent,
     children: [
-      { path: 'dashboard', component: DashboardComponent },
+      { path: '', component: DashboardComponent },
       { path: 'progress', component: ProgressComponent },
       { path: 'grafica', component: GraficaComponent },
-      { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
     ]
   }
 ];

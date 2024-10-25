@@ -8,5 +8,6 @@ import { NopagefoundComponent } from '@404/nopagefound/nopagefound.component';
 export const routes: Routes = [
   ...pagesRoutes,
   ...authRoutes,
+  {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
   {path: '**', component: NopagefoundComponent}
 ];
