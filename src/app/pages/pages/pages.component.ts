@@ -5,6 +5,8 @@ import { BreadcrumbsComponent } from '@shared/breadcrumbs/breadcrumbs.component'
 import { HeaderComponent } from '@shared/header/header.component';
 import { SidebarsComponent } from '@shared/sidebars/sidebars.component';
 
+declare function customInitFunctions(): void;
+
 @Component({
   selector: 'app-pages',
   standalone: true,
@@ -17,7 +19,11 @@ import { SidebarsComponent } from '@shared/sidebars/sidebars.component';
   templateUrl: './pages.component.html',
   styleUrl: './pages.component.scss',
 })
-export class PagesComponent {
+export class PagesComponent implements OnInit {
   settingsService = inject(SettingsService);
   year: number = new Date().getFullYear();
+
+  ngOnInit(): void {
+    customInitFunctions();
+  }
 }
