@@ -11,11 +11,27 @@ export const pagesRoutes: Routes = [
     path: 'dashboard',
     component: PagesComponent,
     children: [
-      { path: '', component: DashboardComponent },
-      { path: 'progress', component: ProgressComponent },
-      { path: 'grafica', component: GraficaComponent },
-      { path: 'account-settings', component: AccountSettingsComponent },
-      { path: 'promesas', component: PromesasComponent },
+      { path: '', component: DashboardComponent, data: { title: 'Dashboard' } },
+      {
+        path: 'progress',
+        component: ProgressComponent,
+        data: { title: 'ProgressBar' },
+      },
+      {
+        path: 'grafica',
+        component: GraficaComponent,
+        data: { title: 'Grafica' },
+      },
+      {
+        path: 'account-settings',
+        component: AccountSettingsComponent,
+        data: { title: 'Ajuste de cuentas' },
+      },
+      {
+        path: 'promesas',
+        component: PromesasComponent,
+        data: { title: 'Promesas' },
+      },
     ],
   },
 ];
