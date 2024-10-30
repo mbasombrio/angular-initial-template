@@ -10,7 +10,8 @@
       "@routes/*": ["src/app/routes/*"],
       "@404/*": ["src/app/404/*"],
       "@shared/*": ["src/app/shared/*"],
-      "@services/*": ["src/app/services/*"]
+      "@services/*": ["src/app/services/*"],
+      "@models/*": ["src/app/models/*"]
     },
     "outDir": "./dist/out-tsc",
     "strict": true,

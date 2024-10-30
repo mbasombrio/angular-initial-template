@@ -4,6 +4,7 @@ import { DashboardComponent } from '@pages/dashboard/dashboard.component';
 import { GraficaComponent } from '@pages/grafica/grafica.component';
 import { PagesComponent } from '@pages/pages/pages.component';
 import { ProgressComponent } from '@pages/progress/progress.component';
+import { PromesasComponent } from '@pages/promesas/promesas.component';
 
 export const pagesRoutes: Routes = [
   {
@@ -14,6 +15,7 @@ export const pagesRoutes: Routes = [
       { path: 'progress', component: ProgressComponent },
       { path: 'grafica', component: GraficaComponent },
       { path: 'account-settings', component: AccountSettingsComponent },
+      { path: 'promesas', component: PromesasComponent },
     ],
   },
 ];
