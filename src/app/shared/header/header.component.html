@@ -323,18 +323,18 @@
             aria-haspopup="true"
             aria-expanded="false"
           >
-            <img src="images/users/1.jpg" alt="user" class="profile-pic" />
+            <img [src]="imgUrl" alt="user" class="profile-pic" />
           </a>
           <div class="dropdown-menu dropdown-menu-right animated fadeIn fast">
             <ul class="dropdown-user">
               <li>
                 <div class="dw-user-box">
                   <div class="u-img">
-                    <img src="images/users/1.jpg" alt="user" />
+                    <img [src]="imgUrl"  alt="user" />
                   </div>
                   <div class="u-text">
-                    <h4>Steave Jobs</h4>
-                    <p class="text-muted">varun&#64;gmail.com</p>
+                    <h4>{{ usuario?.nombre }}</h4>
+                    <p class="text-muted">{{usuario?.email | slice: 0:20 }}</p>
                     <a
                       href="pages-profile.html"
                       class="btn btn-rounded btn-danger btn-sm"
@@ -372,7 +372,7 @@
               </li>
               <li role="separator" class="divider"></li>
               <li>
-                <a routerLink="/login">
+                <a (click)="logout()" class="cursor">
                   <i class="fa fa-power-off"></i>
                   Logout
                 </a>

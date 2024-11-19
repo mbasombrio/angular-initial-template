@@ -11,7 +11,9 @@
       "@404/*": ["src/app/404/*"],
       "@shared/*": ["src/app/shared/*"],
       "@services/*": ["src/app/services/*"],
-      "@models/*": ["src/app/models/*"]
+      "@models/*": ["src/app/models/*"],
+      "@interfaces/*": ["src/app/interfaces/*"],
+      "@guards/*": ["src/app/guards/*"]
     },
     "outDir": "./dist/out-tsc",
     "strict": true,

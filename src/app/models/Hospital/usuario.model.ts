@@ -1,3 +1,5 @@
+import { environment } from '../../../environments/environment';
+
 export class Usuario {
   constructor(
     public nombre: string,
@@ -8,4 +10,14 @@ export class Usuario {
     public img?: string,
     public uid?: string
   ) {}
+
+  get imageUrl() {
+
+    if (this.img?.includes('https')) {
+      return this.img;
+    }
+    return this.img
+      ? `${environment.apiUrl}upload/usuarios/${this.img}`
+      : `${environment.apiUrl}upload/usuarios/no-img.jpg`;
+  }
 }
