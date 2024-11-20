@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SidebarService } from '@services/sidebar.service';
 import { UserService } from '@services/user.service';
@@ -13,7 +13,8 @@ import { UserService } from '@services/user.service';
 export class SidebarsComponent {
   private sidebarService = inject(SidebarService);
   private userService = inject(UserService);
-  imgUrl = this.userService.user?.imageUrl || '';
+
   usuario = this.userService.user;
+  imgUrl = computed(() => this.usuario().imageUrl || '');
   menuItems = this.sidebarService.menu;
 }

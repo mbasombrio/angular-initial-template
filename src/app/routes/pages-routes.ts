@@ -6,6 +6,7 @@ import { GraficaComponent } from '@pages/grafica/grafica.component';
 import { PagesComponent } from '@pages/pages/pages.component';
 import { ProgressComponent } from '@pages/progress/progress.component';
 import { PromesasComponent } from '@pages/promesas/promesas.component';
+import { PerfilComponent } from '@pages/perfil/perfil.component';
 
 export const pagesRoutes: Routes = [
   {
@@ -33,6 +34,11 @@ export const pagesRoutes: Routes = [
         path: 'promesas',
         component: PromesasComponent,
         data: { title: 'Promesas' },
+      },
+      {
+        path: 'profile',
+        component: PerfilComponent,
+        data: { title: 'Perfil' },
       },
     ],
   },

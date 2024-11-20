@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { UserService } from '@services/user.service';
 import { SlicePipe } from '@angular/common';
@@ -13,16 +13,8 @@ import { SlicePipe } from '@angular/common';
 export class HeaderComponent {
   userService = inject(UserService);
   usuario = this.userService.user;
-  imgUrl =  '';
-
-
-  constructor() {
-    this.imgUrl = this.userService.user?.imageUrl || '';
-  }
 
   logout() {
     this.userService.logout();
   }
-
-
 }

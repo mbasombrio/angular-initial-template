@@ -12,7 +12,6 @@ export class Usuario {
   ) {}
 
   get imageUrl() {
-
     if (this.img?.includes('https')) {
       return this.img;
     }

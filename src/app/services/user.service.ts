@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { LoginForm } from '@interfaces/login-form.interface';
 import { renewTokenInterface } from '@interfaces/renew-token.interface';
 import { ResponseCreateUser } from '@interfaces/response-create-user.interface';
@@ -17,9 +17,20 @@ declare const google: any;
 export class UserService {
   private http = inject(HttpClient);
   private router = inject(Router);
-  user: Usuario | undefined;
+
+  userLogged = signal<Usuario>(new Usuario('', '', '', '', false, '', ''));
+  user = computed(() => this.userLogged());
 
   constructor() {}
+
+  get token(): string {
+    return localStorage.getItem('token') || '';
+  }
+
+  get uid(): string {
+    const user = this.userLogged();
+    return user && user.uid ? user.uid : '';
+  }
 
   logout() {
     localStorage.removeItem('token');
@@ -35,7 +46,7 @@ export class UserService {
   }
 
   validarToken(): Observable<boolean> {
-    const token = localStorage.getItem('token') || '';
+    const token = this.token;
     // hacer .map y que devuelva el booleano
 
     return this.http
@@ -47,9 +58,11 @@ export class UserService {
       .pipe(
         map((resp) => {
           const { nombre, email, role, google, img = '', uid } = resp.user;
-          this.user = new Usuario(nombre, email, role, '', google, img, uid);
+          this.userLogged.set(
+            new Usuario(nombre, email, role, '', google, img, uid)
+          );
           localStorage.setItem('token', resp.token);
-          return true
+          return true;
         }),
         catchError(() => {
           return of(false);
@@ -91,5 +104,28 @@ export class UserService {
           localStorage.setItem('token', resp.token);
         })
       );
+  }
+
+  actualizarPerfil(data: { email: string; nombre: string; role: string }) {
+    // Obtener el valor actual de la señal
+    const user: Usuario = this.userLogged();
+
+    // Comprobar que 'user' es un objeto de tipo 'Usuario' y tiene las propiedades necesarias
+    if (user && user.role !== undefined) {
+      data = {
+        ...data,
+        role: user.role, // Asignamos el role desde el objeto 'user'
+      };
+    }
+
+    return this.http.put<{ ok: string; usuario: Usuario; msg: string }>(
+      `${environment.apiUrl}usuarios/${this.uid}`,
+      data,
+      {
+        headers: {
+          'x-token': this.token,
+        },
+      }
+    );
   }
 }
