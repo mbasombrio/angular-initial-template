@@ -26,6 +26,7 @@ export class PerfilComponent {
   formSubmitted = false;
   usuario: Usuario = this.userService.userLogged();
   imagenUpload: File | null = null;
+  imgTemp: string | null = null;
 
   profileForm = new FormGroup({
     email: new FormControl(this.usuario.email || '', [
@@ -77,14 +78,28 @@ export class PerfilComponent {
     return this.profileForm.get(campo)?.invalid && this.formSubmitted;
   }
 
-  uploadImage(event: any) {
+  cambiarImagen(event: any) {
     const file = event.target.files[0];
     if (!file) return;
-
     this.imagenUpload = file;
+
+    const reader = new FileReader();
+    const url64 = reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      this.imgTemp = reader.result as string;
+      console.log(reader.result);
+    };
+  }
+
+  uploadImage() {
+    if (!this.imagenUpload) return;
     this.fileUploadService
-      .updatePhoto(file, 'usuarios', this.usuario.uid || '')
+      .updatePhoto(this.imagenUpload, 'usuarios', this.usuario.uid || '')
       .then((resp) => {
+        this.imgTemp = null;
+        console.log(resp.fileName);
+        this.usuario.img = resp.fileName;
+
         this.userService.userLogged.set(
           new Usuario(
             this.usuario.nombre,
@@ -92,9 +107,21 @@ export class PerfilComponent {
             this.usuario.role,
             '', // Password no es relevante aquí
             this.usuario.google,
-            resp.fileName,
+            this.usuario.img,
             this.usuario.uid
           )
+        );
+        // Mensaje de éxito opcional
+        this.messageService.successMessage(
+          'Imagen actualizada',
+          'La imagen de perfil ha sido actualizada correctamente.'
+        );
+      })
+      .catch((err) => {
+        console.error(err);
+        this.messageService.errorMessage(
+          'Error',
+          'No se pudo actualizar la imagen.'
         );
       });
   }

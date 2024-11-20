@@ -68,16 +68,24 @@
       <div class="card-body">
         <h4 class="card-title">Avatar</h4>
         <h6 class="card-subtitle">Imagen del usuario</h6>
-        <img [src]="usuario.imageUrl" alt="" class="img-avatar" />
+        <div class="avatares">
+          <img [src]="usuario.imageUrl" alt="" class="img-avatar" />
+
+          @if(imgTemp) {
+          <i class="fa fa-exchange icono-centrado" aria-hidden="true"></i>
+          <img [src]="imgTemp" alt="" class="img-avatar" />
+          }
+        </div>
         <br />
         <br />
 
-        <input type="file" name="" id="" (change)="uploadImage($event)" />
+        <input type="file" name="" id="" (change)="cambiarImagen($event)" />
         <br />
         <br />
         <button
           type="button"
           class="btn btn-success btn-block waves-effect waves-light m-r-10"
+          (click)="uploadImage()"
         >
           <i class="fa fa-check"></i>
           Cambiar Imagen
