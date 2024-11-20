@@ -32,6 +32,11 @@ export class UserService {
     return user && user.uid ? user.uid : '';
   }
 
+  get isGoogleUser(): boolean {
+    const googleEmail = localStorage.getItem('googleEmail');
+    return googleEmail ? true : false;
+  }
+
   logout() {
     localStorage.removeItem('token');
     const googleEmail = localStorage.getItem('googleEmail');

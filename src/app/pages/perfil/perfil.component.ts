@@ -29,10 +29,13 @@ export class PerfilComponent {
   imgTemp: string | null = null;
 
   profileForm = new FormGroup({
-    email: new FormControl(this.usuario.email || '', [
-      Validators.required,
-      Validators.email,
-    ]),
+    email: new FormControl(
+      {
+        value: this.usuario.email || '',
+        disabled: this.userService.isGoogleUser,
+      },
+      [Validators.required, Validators.email]
+    ),
     nombre: new FormControl(this.usuario.nombre || '', Validators.required),
     role: new FormControl(this.usuario.role || '', Validators.required),
   });
@@ -80,7 +83,10 @@ export class PerfilComponent {
 
   cambiarImagen(event: any) {
     const file = event.target.files[0];
-    if (!file) return;
+    if (!file) {
+      this.imgTemp = null;
+      return;
+    }
     this.imagenUpload = file;
 
     const reader = new FileReader();
