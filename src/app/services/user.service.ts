@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { LoginForm } from '@interfaces/login-form.interface';
 import { renewTokenInterface } from '@interfaces/renew-token.interface';
@@ -8,6 +8,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
+import { ResponseUsuariostDTO } from '@interfaces/responseListDTO.interface';
 
 declare const google: any;
 
@@ -35,6 +36,14 @@ export class UserService {
   get isGoogleUser(): boolean {
     const googleEmail = localStorage.getItem('googleEmail');
     return googleEmail ? true : false;
+  }
+
+  get headers() {
+    return {
+      headers: {
+        'x-token': this.token,
+      },
+    };
   }
 
   logout() {
@@ -132,5 +141,42 @@ export class UserService {
         },
       }
     );
+  }
+
+  getUsers(desde: number = 0) {
+    let params = new HttpParams();
+    params = params.append('desde', desde.toString());
+    return this.http
+      .get<ResponseUsuariostDTO>(`${environment.apiUrl}usuarios`, {
+        ...this.headers,
+        params,
+      })
+      .pipe(
+        map((resp) => {
+          const usuarios = resp.usuarios.map(
+            (usuario) =>
+              new Usuario(
+                usuario.nombre,
+                usuario.email,
+                usuario.role,
+                '',
+                usuario.google,
+                usuario.img,
+                usuario.uid
+              )
+          );
+          return {
+            ok: resp.ok,
+            total: resp.total,
+            usuarios,
+          };
+        })
+      );
+  }
+
+  deleteUser(uid: string) {
+    return this.http.delete(`${environment.apiUrl}usuarios/${uid}`, {
+      ...this.headers,
+    });
   }
 }

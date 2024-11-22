@@ -7,6 +7,15 @@ import Swal from 'sweetalert2';
 export class MessagesService {
   constructor() {}
 
+  get confirmStyles() {
+    return {
+      customClass: {
+        confirmButton: 'btn btn-info',
+      },
+      buttonsStyling: false,
+    };
+  }
+
   successMessage(title: string, message: string, timer?: number) {
     Swal.fire({
       title: title,
@@ -14,6 +23,7 @@ export class MessagesService {
       icon: 'success',
       confirmButtonText: 'Ok',
       timer: timer,
+      ...this.confirmStyles,
     });
   }
 
@@ -24,6 +34,7 @@ export class MessagesService {
       icon: 'error',
       confirmButtonText: 'Ok',
       timer: timer,
+      ...this.confirmStyles,
     });
   }
 
@@ -34,6 +45,7 @@ export class MessagesService {
       icon: 'warning',
       confirmButtonText: 'Ok',
       timer: timer,
+      ...this.confirmStyles,
     });
   }
 
@@ -44,20 +56,20 @@ export class MessagesService {
       icon: 'info',
       confirmButtonText: 'Ok',
       timer: timer,
+      ...this.confirmStyles,
     });
   }
-
   questionMessage(
     title: string,
     message: string,
-    confirmButtonText: string,
-    cancelButtonText: string,
-    callback: () => void
+    callback: () => void,
+    confirmButtonText: string = 'Confirmar',
+    cancelButtonText: string = 'Cancelar'
   ) {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
-        confirmButton: 'btn btn-success',
-        cancelButton: 'btn btn-danger',
+        confirmButton: 'btn btn-success mx-2', // Clase Bootstrap para margen horizontal
+        cancelButton: 'btn btn-danger mx-2', // Clase Bootstrap para margen horizontal
       },
       buttonsStyling: false,
     });

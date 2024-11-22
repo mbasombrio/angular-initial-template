@@ -7,6 +7,7 @@ import { PagesComponent } from '@pages/pages/pages.component';
 import { ProgressComponent } from '@pages/progress/progress.component';
 import { PromesasComponent } from '@pages/promesas/promesas.component';
 import { PerfilComponent } from '@pages/perfil/perfil.component';
+import { UsuariosComponent } from '@pages/mantenimientos/usuarios/usuarios.component';
 
 export const pagesRoutes: Routes = [
   {
@@ -39,6 +40,12 @@ export const pagesRoutes: Routes = [
         path: 'profile',
         component: PerfilComponent,
         data: { title: 'Perfil' },
+      },
+
+      {
+        path: 'usuarios',
+        component: UsuariosComponent,
+        data: { title: 'Usuarios' },
       },
     ],
   },

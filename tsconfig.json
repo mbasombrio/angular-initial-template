@@ -8,6 +8,7 @@
       "@auth/*": ["src/app/auth/*"],
       "@pages/*": ["src/app/pages/*"],
       "@routes/*": ["src/app/routes/*"],
+      "@components/*": ["src/app/components/*"],
       "@404/*": ["src/app/404/*"],
       "@shared/*": ["src/app/shared/*"],
       "@services/*": ["src/app/services/*"],

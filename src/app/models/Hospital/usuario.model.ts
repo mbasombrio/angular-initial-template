@@ -12,6 +12,10 @@ export class Usuario {
   ) {}
 
   get imageUrl() {
+    if (!this.img) {
+      `${environment.apiUrl}upload/usuarios/no-img.jpg`;
+    }
+
     if (this.img?.includes('https')) {
       return this.img;
     }
