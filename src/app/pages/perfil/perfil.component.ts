@@ -44,37 +44,39 @@ export class PerfilComponent {
     this.formSubmitted = true;
     if (this.profileForm.invalid) return;
 
-    this.userService
-      .actualizarPerfil(
-        this.profileForm.value as {
-          email: string;
-          nombre: string;
-          role: string;
-        }
-      )
-      .subscribe({
-        next: (resp) => {
-          console.log(resp.usuario);
-          this.userService.userLogged.set(
-            new Usuario(
-              resp.usuario.nombre,
-              resp.usuario.email,
-              resp.usuario.role,
-              '', // Password no es relevante aquí
-              resp.usuario.google,
-              resp.usuario.img,
-              resp.usuario.uid
-            )
-          );
-          this.messageService.successMessage(
-            'Perfil actualizado',
-            'Perfil actualizado correctamente'
-          );
-        },
-        error: (err) => {
-          this.messageService.errorMessage('Error', err.error.msg);
-        },
-      });
+    const user = this.userService.userLogged();
+    const userToSave = new Usuario(
+      this.profileForm.controls.nombre.value || '',
+      this.profileForm.value.email || '',
+      user.role,
+      user.password,
+      user.google,
+      user.img,
+      user.uid
+    );
+    this.userService.actualizar(userToSave).subscribe({
+      next: (resp) => {
+        console.log(resp.usuario);
+        this.userService.userLogged.set(
+          new Usuario(
+            resp.usuario.nombre,
+            resp.usuario.email,
+            resp.usuario.role,
+            '', // Password no es relevante aquí
+            resp.usuario.google,
+            resp.usuario.img,
+            resp.usuario.uid
+          )
+        );
+        this.messageService.successMessage(
+          'Perfil actualizado',
+          'Perfil actualizado correctamente'
+        );
+      },
+      error: (err) => {
+        this.messageService.errorMessage('Error', err.error.msg);
+      },
+    });
   }
 
   campoNoValido(campo: string): boolean | undefined {

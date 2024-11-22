@@ -22,6 +22,10 @@ export class UsuariosComponent implements OnInit {
   totalUsuarios = 0;
   desde = 0;
   loading = false;
+  roles = [
+    { value: 'ADMIN_ROLE', text: 'Admin' },
+    { value: 'USER_ROLE', text: 'User' },
+  ];
 
   ngOnInit(): void {
     this.getUsers();
@@ -110,5 +114,35 @@ export class UsuariosComponent implements OnInit {
         });
       }
     );
+  }
+
+  cambiarRol(usuario: Usuario, newRol: string) {
+    console.log(usuario, newRol);
+
+    const user: Usuario = new Usuario(
+      usuario.nombre,
+      usuario.email,
+      newRol,
+      '',
+      false,
+      '',
+      usuario.uid
+    );
+
+    this.userService.actualizar(user).subscribe({
+      next: () => {
+        this.messageService.successMessage(
+          'Rol actualizado',
+          'El rol del usuario ha sido actualizado correctamente'
+        );
+      },
+      error: (err) => {
+        this.messageService.errorMessage(
+          'Error al actualizar el rol',
+          err.error.msg
+        );
+        this.getUsers();
+      },
+    });
   }
 }

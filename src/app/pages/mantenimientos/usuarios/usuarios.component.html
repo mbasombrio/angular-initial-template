@@ -29,7 +29,7 @@
                 <th>Avatar</th>
                 <th>Email</th>
                 <th>Nombre</th>
-                <th>Rol</th>
+                <th style="width: 140px">Rol</th>
                 <th>Auth</th>
                 <th class="text-nowrap">Actiones</th>
               </tr>
@@ -42,7 +42,22 @@
                 </td>
                 <td>{{ usuario.email }}</td>
                 <td>{{ usuario.nombre }}</td>
-                <td>{{ usuario.role }}</td>
+                <td>
+                  <select
+                    class="form-control cursor"
+                    #selectRol
+                    (change)="cambiarRol(usuario, selectRol.value)"
+                  >
+                    @for (rol of roles; track $index) {
+                    <option
+                      [value]="rol"
+                      [selected]="rol.value === usuario.role"
+                    >
+                      {{ rol.text }}
+                    </option>
+                    }
+                  </select>
+                </td>
                 <td>
                   <span *ngIf="usuario.google" class="label label-danger">
                     Google
@@ -52,9 +67,6 @@
                   </span>
                 </td>
                 <td class="text-nowrap text-center">
-                  <a href="#" data-toggle="tooltip" data-original-title="Edit">
-                    <i class="fa fa-pencil text-inverse m-r-10 fa-2x"></i>
-                  </a>
                   <a
                     (click)="eliminarUsuario(usuario)"
                     data-toggle="tooltip"

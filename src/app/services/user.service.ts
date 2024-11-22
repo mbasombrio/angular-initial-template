@@ -120,20 +120,14 @@ export class UserService {
       );
   }
 
-  actualizarPerfil(data: { email: string; nombre: string; role: string }) {
-    // Obtener el valor actual de la señal
-    const user: Usuario = this.userLogged();
-
-    // Comprobar que 'user' es un objeto de tipo 'Usuario' y tiene las propiedades necesarias
-    if (user && user.role !== undefined) {
-      data = {
-        ...data,
-        role: user.role, // Asignamos el role desde el objeto 'user'
-      };
-    }
-
+  actualizar(usuario: Usuario) {
+    const data = {
+      email: usuario.email,
+      nombre: usuario.nombre,
+      role: usuario.role,
+    };
     return this.http.put<{ ok: string; usuario: Usuario; msg: string }>(
-      `${environment.apiUrl}usuarios/${this.uid}`,
+      `${environment.apiUrl}usuarios/${usuario.uid}`,
       data,
       {
         headers: {
