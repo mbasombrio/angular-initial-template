@@ -1,9 +1,17 @@
 import { NgIf } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import {
+  Component,
+  effect,
+  EffectRef,
+  inject,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { SpinnerComponent } from '@components/spinner/spinner.component';
 import { Usuario } from '@models/Hospital/usuario.model';
 import { BusquedasService } from '@services/busquedas.service';
 import { MessagesService } from '@services/messages.service';
+import { ModalImageService } from '@services/modal-image.service';
 import { UserService } from '@services/user.service';
 
 @Component({
@@ -13,10 +21,13 @@ import { UserService } from '@services/user.service';
   templateUrl: './usuarios.component.html',
   styleUrl: './usuarios.component.scss',
 })
-export class UsuariosComponent implements OnInit {
+export class UsuariosComponent implements OnInit, OnDestroy {
   userService = inject(UserService);
   messageService = inject(MessagesService);
   busquedaService = inject(BusquedasService);
+  public modalImagenService = inject(ModalImageService);
+
+  private destroyEffect: EffectRef | null = null;
 
   usuarios: Usuario[] = [];
   totalUsuarios = 0;
@@ -26,6 +37,19 @@ export class UsuariosComponent implements OnInit {
     { value: 'ADMIN_ROLE', text: 'Admin' },
     { value: 'USER_ROLE', text: 'User' },
   ];
+
+  constructor() {
+    // Suscribirse al signal del ModalImageService
+    this.destroyEffect = effect(
+      () => {
+        if (this.modalImagenService.changeImage()) {
+          this.getUsers(); // Actualiza la lista de usuarios
+          this.modalImagenService.changeImage.set(false); // Resetea el signal
+        }
+      },
+      { allowSignalWrites: true }
+    );
+  }
 
   ngOnInit(): void {
     this.getUsers();
@@ -144,5 +168,21 @@ export class UsuariosComponent implements OnInit {
         this.getUsers();
       },
     });
+  }
+
+  openModal(usuario: Usuario) {
+    console.log(usuario);
+    this.modalImagenService.abrirModal(
+      usuario.uid || '',
+      'usuarios',
+      usuario.img
+    );
+  }
+
+  ngOnDestroy(): void {
+    if (this.destroyEffect) {
+      this.destroyEffect.destroy();
+      this.destroyEffect = null;
+    }
   }
 }

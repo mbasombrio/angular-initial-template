@@ -73,3 +73,17 @@ Login register and recover password Page
   margin: 0 auto;
   display: block;
 }
+
+.fondo-modal {
+  background-color: rgba(0, 0, 0, 0.5);
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+}
+
+.ocultar {
+  display: none;
+}

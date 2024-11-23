@@ -38,7 +38,11 @@
               @for (usuario of usuarios; track $index) {
               <tr>
                 <td>
-                  <img [src]="usuario.imageUrl" class="img-avatar-list w100" />
+                  <img
+                    [src]="usuario.imageUrl"
+                    class="img-avatar-list w100 cursor"
+                    (click)="openModal(usuario)"
+                  />
                 </td>
                 <td>{{ usuario.email }}</td>
                 <td>{{ usuario.nombre }}</td>

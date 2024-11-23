@@ -1,5 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { ModalImageComponent } from '@components/modal-image/modal-image.component';
 import { SettingsService } from '@services/settings.service';
 import { BreadcrumbsComponent } from '@shared/breadcrumbs/breadcrumbs.component';
 import { HeaderComponent } from '@shared/header/header.component';
@@ -15,6 +16,7 @@ declare function customInitFunctions(): void;
     HeaderComponent,
     SidebarsComponent,
     BreadcrumbsComponent,
+    ModalImageComponent,
   ],
   templateUrl: './pages.component.html',
   styleUrl: './pages.component.scss',

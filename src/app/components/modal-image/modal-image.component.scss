@@ -1,0 +1,24 @@
+.img-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin: 0 auto;
+  display: block;
+}
+
+.avatares {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center; /* Asegura que los elementos estén alineados verticalmente */
+  gap: 10px; /* Ajusta el espacio entre las imágenes y el ícono */
+  margin-top: 20px;
+}
+
+.icono-centrado {
+  font-size: 24px; /* Ajusta el tamaño del ícono según lo necesites */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333; /* Cambia el color del ícono si es necesario */
+}
