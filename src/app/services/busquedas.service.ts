@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { map } from 'rxjs';
 import { Usuario } from '@models/Hospital/usuario.model';
+import { Hospital } from '@models/Hospital/hospital.model';
+import { Medico } from '@models/Hospital/medico.model';
 
 @Injectable({
   providedIn: 'root',
@@ -37,6 +39,14 @@ export class BusquedasService {
     );
   }
 
+  transformarHospitales(resp: any): Hospital[] {
+    return resp.map((hospital: any) => ({
+      nombre: hospital.nombre,
+      img: hospital.img,
+      uid: hospital.uid,
+    }));
+  }
+
   buscar(tipo: 'usuarios' | 'medicos' | 'hospitales', termino: string) {
     const url = `${environment.apiUrl}todo/coleccion/${tipo}/${termino}`;
     return this.http.get(url, this.headers).pipe(
@@ -45,11 +55,21 @@ export class BusquedasService {
           case 'usuarios':
             return this.transformarUsuarios(resp.result);
           case 'medicos':
-            return resp.result;
+            return this.transformarHospitales(resp.result);
           case 'hospitales':
             return resp.result;
         }
       })
     );
+  }
+
+  busquedaGlobal(termino: string) {
+    const url = `${environment.apiUrl}todo/${termino}`;
+    return this.http.get<{
+      ok: boolean;
+      hospitales: Hospital[];
+      medicos: Medico[];
+      usuarios: Usuario[];
+    }>(url, this.headers);
   }
 }

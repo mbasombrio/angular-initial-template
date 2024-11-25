@@ -1,0 +1,80 @@
+<div class="row">
+  <div class="col-lg-6">
+    <div class="col-lg-6">
+      <app-spinner *ngIf="loading" />
+      <div class="card" *ngIf="!loading">
+        <div class="card-body">
+          <h4 class="card-title">Medico</h4>
+          <h6 class="card-subtitle">Actualizar informacion</h6>
+          <div class="text-center">
+            <img
+              class="img-avatar"
+              [src]="medico?.img ?? '' | imagen : 'medicos'"
+            />
+          </div>
+          <form class="form-horizontal p-t-20" [formGroup]="form">
+            <div class="form-group row">
+              <label for="exampleInputuname3" class="col-sm-3 control-label">
+                Nombre*
+              </label>
+              <div class="col-sm-9">
+                <div class="input-group">
+                  <div class="input-group-addon"><i class="ti-user"></i></div>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="exampleInputuname3"
+                    placeholder="Nombre del medico"
+                    formControlName="nombre"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="exampleInputEmail3" class="col-sm-3 control-label">
+                Hospital
+              </label>
+              <div class="col-sm-9">
+                <div class="input-group">
+                  <div class="input-group-addon"><i class="ti-home"></i></div>
+                  <select
+                    class="form-control"
+                    id="exampleFormControlSelect1"
+                    formControlName="hospital"
+                  >
+                    <option [value]="">Seleccione un Hospital</option>
+                    @for (hospital of hospitales; track $index) {
+                    <option [value]="hospital.uid">
+                      {{ hospital.nombre }}
+                    </option>
+                    }
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row m-b-0">
+              <div class="offset-sm-3 col-sm-9">
+                <a
+                  class="btn btn-info waves-effect waves-light m-r-10"
+                  [routerLink]="['/dashboard/medicos']"
+                >
+                  <i class="fa fa-arrow-left"></i>
+                  Volver
+                </a>
+                <button
+                  type="submit"
+                  class="btn btn-success waves-effect waves-light"
+                  (click)="guardar()"
+                >
+                  <i class="fa fa-check"></i>
+                  Confirmar
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

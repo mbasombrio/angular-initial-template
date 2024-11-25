@@ -8,6 +8,10 @@ import { ProgressComponent } from '@pages/progress/progress.component';
 import { PromesasComponent } from '@pages/promesas/promesas.component';
 import { PerfilComponent } from '@pages/perfil/perfil.component';
 import { UsuariosComponent } from '@pages/mantenimientos/usuarios/usuarios.component';
+import { HospitalesComponent } from '@pages/mantenimientos/hospitales/hospitales.component';
+import { MedicosComponent } from '@pages/mantenimientos/medicos/medicos.component';
+import { MedicoComponent } from '@pages/mantenimientos/medico/medico.component';
+import { BusquedasComponent } from '@pages/busquedas/busquedas.component';
 
 export const pagesRoutes: Routes = [
   {
@@ -41,11 +45,33 @@ export const pagesRoutes: Routes = [
         component: PerfilComponent,
         data: { title: 'Perfil' },
       },
+      {
+        path: 'busquedas/:termino',
+        component: BusquedasComponent,
+        data: { title: 'Resultado Busqueda' },
+      },
 
       {
         path: 'usuarios',
         component: UsuariosComponent,
         data: { title: 'Usuarios' },
+      },
+
+      {
+        path: 'hospitales',
+        component: HospitalesComponent,
+        data: { title: 'Hospitales' },
+      },
+      {
+        path: 'medicos',
+        component: MedicosComponent,
+        data: { title: 'Medicos' },
+      },
+
+      {
+        path: 'medico/:id',
+        component: MedicoComponent,
+        data: { title: 'Medico' },
       },
     ],
   },
